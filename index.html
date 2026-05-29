@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Pest Solutions | Professional Pest Management Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@800;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blue: { 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb' },
+                        dark: { 950: '#050505', 900: '#0A0A0A', 800: '#121212', 700: '#1C1C1C' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        logo: ['Audiowide', 'sans-serif'],
+                        number: ['Unbounded', 'sans-serif'],
+                        wide: ['Syncopate', 'sans-serif']
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'scroll-infinite': 'scrollInfinite 30s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'scan': 'scan 4s linear infinite',
+                        'count-up': 'fadeInUp 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        scrollInfinite: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' }
+                        },
+                        scan: {
+                            '0%': { top: '-10%', opacity: '0' },
+                            '10%': { opacity: '1' },
+                            '90%': { opacity: '1' },
+                            '100%': { top: '110%', opacity: '0' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: #fafafa; color: #18181b; overflow-x: hidden; }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        .glass-card {
+            background: rgba(255,255,255,0.75);
+            border: 1px solid rgba(9,9,11,0.06);
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.03), inset 0 0 0 1px rgba(255,255,255,0.6);
+            backdrop-filter: blur(10px);
+            transition: all 500ms ease;
+        }
+        .glass-card:hover {
+            background: rgba(255,255,255,0.95);
+            border-color: rgba(59,130,246,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px 0 rgba(0,0,0,0.05), inset 0 0 0 1px rgba(59,130,246,0.15);
+        }
+
+        .blue-glow { box-shadow: 0 0 20px rgba(59,130,246,0.15); }
+        .blue-glow:hover { box-shadow: 0 0 30px rgba(59,130,246,0.3); }
+        .blue-text { background: linear-gradient(135deg, #1d4ed8, #2563eb, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .blue-border { border: 1px solid rgba(59,130,246,0.2); }
+        .blue-border:hover { border-color: rgba(59,130,246,0.5); }
+
+        .hero-overlay {
+            background: linear-gradient(to right, #fafafa 0%, rgba(250,250,250,0.92) 40%, rgba(250,250,250,0.6) 70%, rgba(250,250,250,0.2) 100%);
+        }
+        .hero-bottom {
+            background: linear-gradient(to top, #fafafa, transparent, rgba(250,250,250,0.3));
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #09090b, #27272a, #52525b);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .mask-fade {
+            mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+        }
+        .line-glow {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(59,130,246,0.3), transparent);
+        }
+
+        .tab-btn.active { background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.4); color: #1d4ed8; }
+        .tab-content { display: none; animation: fadeInUp 0.5s ease-out; }
+        .tab-content.active { display: block; }
+
+        .process-line { position: relative; }
+        .process-line::before {
+            content: ''; position: absolute; left: 19px; top: 40px; bottom: 0;
+            width: 2px; background: linear-gradient(to bottom, rgba(59,130,246,0.3), rgba(59,130,246,0.03));
+        }
+
+        .nav-blur { backdrop-filter: blur(12px); background: rgba(255,255,255,0.85); }
+
+        .floating-btn {
+            position: fixed; bottom: 2rem; left: 2rem; z-index: 90;
+        }
+
+        @media (max-width: 768px) {
+            .hero-overlay { background: linear-gradient(to top, #fafafa 0%, rgba(250,250,250,0.95) 50%, rgba(250,250,250,0.7) 100%); }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f4f4f5; }
+        ::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.3); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(59,130,246,0.5); }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-zinc-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3">
+                <img src="assets/images/img (10).png" alt="PPS Logo" class="w-10 h-10 object-contain rounded-lg">
+                <div>
+                    <span class="font-logo text-sm text-blue-400 tracking-wide">PPS</span>
+                    <p class="text-[10px] text-zinc-500 -mt-0.5 tracking-widest uppercase">Perfect Pest Solutions</p>
+                </div>
+            </a>
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="#about" class="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors">About</a>
+                <a href="#services" class="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors">Services</a>
+                <a href="#process" class="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors">Process</a>
+                <a href="#pests" class="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors">Pest Info</a>
+                <a href="#areas" class="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors">Areas</a>
+                <a href="#contact" class="ml-4 px-6 py-2.5 bg-blue-400 text-dark-950 text-sm font-semibold rounded-lg hover:bg-blue-500 transition-all hover:-translate-y-0.5 blue-glow">
+                    Contact Us
+                </a>
+            </div>
+            <button id="menuBtn" class="lg:hidden text-zinc-800">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden hidden border-t border-zinc-200/50 bg-white/95 backdrop-blur-xl">
+            <div class="px-4 py-6 flex flex-col gap-4">
+                <a href="#about" class="text-zinc-600 hover:text-zinc-900 py-2 transition-colors mobile-link">About</a>
+                <a href="#services" class="text-zinc-600 hover:text-zinc-900 py-2 transition-colors mobile-link">Services</a>
+                <a href="#process" class="text-zinc-600 hover:text-zinc-900 py-2 transition-colors mobile-link">Process</a>
+                <a href="#pests" class="text-zinc-600 hover:text-zinc-900 py-2 transition-colors mobile-link">Pest Info</a>
+                <a href="#areas" class="text-zinc-600 hover:text-zinc-900 py-2 transition-colors mobile-link">Areas</a>
+                <a href="#contact" class="mt-2 px-6 py-3 bg-blue-400 text-dark-950 text-sm font-semibold rounded-lg text-center mobile-link">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20">
+        <div class="absolute inset-0 overflow-hidden">
+            <!-- Glowing background accents -->
+            <div class="absolute top-1/4 right-0 w-[500px] h-[500px] bg-blue-400/10 rounded-full blur-3xl -mr-64 -mt-32"></div>
+            <div class="absolute bottom-10 left-10 w-[300px] h-[300px] bg-blue-300/5 rounded-full blur-3xl -ml-32"></div>
+            <!-- Scan Line -->
+            <div class="absolute left-0 right-0 h-px bg-blue-400/25" style="animation: scan 4s linear infinite;"></div>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24 py-16 sm:py-24">
+            <div class="max-w-2xl">
+                <h1 class="text-4xl sm:text-5xl lg:text-7xl font-semibold tracking-tight leading-[1.05] mb-6 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s;">
+                    <span class="text-gradient">Protect Your</span><br>
+                    <span class="blue-text">Space.</span>
+                </h1>
+                <p class="text-base sm:text-lg font-light text-zinc-600 leading-relaxed mb-10 max-w-lg opacity-0 animate-fade-in-up" style="animation-delay: 0.4s;">
+                    Cost-effective, eco-friendly pest management by technically qualified professionals for homes and businesses across Noida & Delhi NCR.
+                </p>
+                <div class="flex flex-wrap gap-4 opacity-0 animate-fade-in-up" style="animation-delay: 0.6s;">
+                    <a href="#contact" class="px-8 py-4 bg-blue-400 text-dark-950 font-semibold rounded-xl hover:bg-blue-500 transition-all hover:-translate-y-1 blue-glow flex items-center gap-2">
+                        Schedule Inspection
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                    <a href="tel:+919350649859" class="px-8 py-4 border border-zinc-200 text-zinc-800 font-semibold rounded-xl hover:bg-zinc-100/50 transition-all hover:-translate-y-1 flex items-center gap-2">
+                        <i data-lucide="phone" class="w-4 h-4 text-blue-600"></i>
+                        Call Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="relative z-10 border-y border-zinc-200/50 bg-zinc-50/80 backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24 py-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="text-center reveal">
+                <p class="text-3xl font-semibold blue-text">12+</p>
+                <p class="text-sm text-zinc-600 mt-1">Services Offered</p>
+            </div>
+            <div class="text-center reveal">
+                <p class="text-3xl font-semibold blue-text">10+</p>
+                <p class="text-sm text-zinc-600 mt-1">Property Types</p>
+            </div>
+            <div class="text-center reveal">
+                <p class="text-3xl font-semibold blue-text">4D</p>
+                <p class="text-sm text-zinc-600 mt-1">Proven Formula</p>
+            </div>
+            <div class="text-center reveal">
+                <p class="text-3xl font-semibold blue-text">100%</p>
+                <p class="text-sm text-zinc-600 mt-1">Eco-Friendly</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-12 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+            <div class="reveal">
+                <span class="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-4 block">About PPS</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight mb-6">
+                    <span class="text-gradient">Technically Qualified Professionals</span><br>
+                    <span class="text-zinc-900">You Can Trust</span>
+                </h2>
+                <p class="text-zinc-600 font-light leading-relaxed mb-6">
+                    Perfect Pest Solutions is one of the leading Pest Management Service providers in Delhi NCR, dedicated to providing the best and most cost-effective solutions. Our company is managed by a technically qualified (M.Sc. Agri. & MBA) and experienced professional who has more than 10 years of experience in pest management, supported by a certified team of trained technicians and supervisors.
+                </p>
+                <p class="text-zinc-600 font-light leading-relaxed mb-8">
+                    We use premium quality chemicals certified by the Central Insecticide Board (CIB). Most of our treatments are eco-friendly, odourless, and non-messy solutions widely used in developed countries, ensuring safety for your health, property, and the environment. No need to vacate your premises during or after the treatment.
+                </p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-blue-400/10 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-4 h-4 text-blue-600"></i>
+                        </div>
+                        <span class="text-sm text-zinc-700">Eco-Friendly</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-blue-400/10 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-4 h-4 text-blue-400"></i>
+                        </div>
+                        <span class="text-sm text-zinc-700">Odourless</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-blue-400/10 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-4 h-4 text-blue-400"></i>
+                        </div>
+                        <span class="text-sm text-zinc-700">No Vacate Needed</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-blue-400/10 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="check" class="w-4 h-4 text-blue-400"></i>
+                        </div>
+                        <span class="text-sm text-zinc-700">Long-Lasting</span>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-6 reveal">
+                <!-- Credential Card 1 -->
+                <div class="glass-card rounded-2xl p-6 border border-blue-400/20 bg-gradient-to-br from-blue-50/30 to-white relative overflow-hidden">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="award" class="w-6 h-6 text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-zinc-900 mb-1">Technically Qualified Leadership</h4>
+                            <p class="text-sm text-zinc-600 font-light">Managed by an agricultural expert (M.Sc. Agri. & MBA) with 10+ years of pest management experience.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Credential Card 2 -->
+                <div class="glass-card rounded-2xl p-6 border border-zinc-200/50 bg-white relative overflow-hidden">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-400/10 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="shield-check" class="w-6 h-6 text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-zinc-900 mb-1">CIB Certified Solutions</h4>
+                            <p class="text-sm text-zinc-600 font-light">We use only premium quality chemicals certified by the Central Insecticide Board (CIB) for safety and effectiveness.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Credential Card 3 -->
+                <div class="glass-card rounded-2xl p-6 border border-zinc-200/50 bg-white relative overflow-hidden">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-400/10 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="users" class="w-6 h-6 text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-zinc-900 mb-1">Certified & Trained Team</h4>
+                            <p class="text-sm text-zinc-600 font-light">Every service is carried out by a certified team of trained technicians and supervisors for maximum safety.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4D Formula Section -->
+    <section class="py-12 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-zinc-50 via-white to-zinc-50"></div>
+        <div class="relative z-10 max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-4 block">Our Signature Approach</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight">
+                    <span class="blue-text">The 4D Formula</span>
+                </h2>
+                <p class="text-zinc-600 font-light mt-4 max-w-xl mx-auto">A scientifically backed methodology that ensures complete pest eradication and prevention.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card rounded-2xl p-8 text-center group reveal" style="transition-delay: 0.1s;">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-400/10 border border-blue-400/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="ban" class="w-7 h-7 text-blue-600"></i>
+                    </div>
+                    <div class="text-blue-600 font-sans font-medium text-3xl mb-2">01</div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Deny Entry</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Seal all potential entry points to prevent pests from accessing your property.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 text-center group reveal" style="transition-delay: 0.2s;">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-400/10 border border-blue-400/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="utensils-crossed" class="w-7 h-7 text-blue-600"></i>
+                    </div>
+                    <div class="text-blue-600 font-sans font-medium text-3xl mb-2">02</div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Deny Food</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Eliminate food sources that attract and sustain pest populations.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 text-center group reveal" style="transition-delay: 0.3s;">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-400/10 border border-blue-400/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="home" class="w-7 h-7 text-blue-600"></i>
+                    </div>
+                    <div class="text-blue-600 font-sans font-medium text-3xl mb-2">03</div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Deny Shelter</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Remove harbourage areas where pests breed and hide on your premises.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 text-center group reveal" style="transition-delay: 0.4s;">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-blue-400/10 border border-blue-400/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="zap" class="w-7 h-7 text-blue-600"></i>
+                    </div>
+                    <div class="text-blue-600 font-sans font-medium text-3xl mb-2">04</div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Destroy</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Targeted elimination of existing pest populations using proven methods.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-12 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-4 block">What We Offer</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight">
+                    <span class="text-gradient">Comprehensive Pest</span>
+                    <span class="text-zinc-900"> Management Services</span>
+                </h2>
+                <p class="text-zinc-600 font-light mt-4 max-w-2xl mx-auto">From common household pests to specialized commercial solutions, we cover every aspect of pest management with precision.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service 1 -->
+                <div class="glass-card rounded-2xl p-8 group reveal">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-2xl font-semibold text-blue-600 font-mono">01</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-400 group-hover:text-blue-600 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Cockroach Management</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Gel-based treatment with no smell, no chaos, and long-lasting effect. Safe for your entire family.</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="glass-card rounded-2xl p-8 group reveal">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-2xl font-semibold text-blue-600 font-mono">02</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-400 group-hover:text-blue-600 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Ant Management</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Effective elimination of black and red ant colonies from your premises with targeted treatments.</p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="glass-card rounded-2xl p-8 group reveal">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-2xl font-semibold text-blue-600 font-mono">03</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-400 group-hover:text-blue-600 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Rodent Management</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Comprehensive rat and mice management through baiting, trapping, proofing, and continuous monitoring.</p>
+                </div>
+                <!-- Service 5 -->
+                <div class="glass-card rounded-2xl p-8 group reveal">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-2xl font-semibold text-blue-600 font-mono">04</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-400 group-hover:text-blue-600 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Termite Management</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Drill-fill-seal method with chemical barriers to eliminate and prevent termite infestations.</p>
+                </div>
+                <!-- Service 6 -->
+                <div class="glass-card rounded-2xl p-8 group reveal">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-2xl font-semibold text-blue-600 font-mono">05</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-400 group-hover:text-blue-600 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Pre-Construction Treatment</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Termite treatment during construction phase to create a protective chemical barrier from the ground up.</p>
+                </div>
+                <!-- Service 7 -->
+                <div class="glass-card rounded-2xl p-8 group reveal">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-2xl font-semibold text-blue-600 font-mono">06</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-400 group-hover:text-blue-600 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Post-Construction Treatment</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Drill-fill-seal termite treatment for existing structures with ongoing service checkups and monitoring.</p>
+                </div>
+                <!-- Service 8 -->
+                <div class="glass-card rounded-2xl p-8 group reveal">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-2xl font-semibold text-blue-600 font-mono">07</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-400 group-hover:text-blue-600 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Bed Bug Management</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Thorough chemical spray treatment with 45-day validity and 2 services at 15-day intervals.</p>
+                </div>
+
+                <!-- Service 10 -->
+                <div class="glass-card rounded-2xl p-8 group reveal">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-2xl font-semibold text-blue-600 font-mono">08</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-400 group-hover:text-blue-600 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Mosquito Management</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Comprehensive mosquito management for residential and commercial areas to prevent vector-borne diseases.</p>
+                </div>
+                <!-- Service 11 -->
+                <div class="glass-card rounded-2xl p-8 group reveal">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-2xl font-semibold text-blue-600 font-mono">09</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-400 group-hover:text-blue-600 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Sanitation Services</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Professional sanitation services to maintain hygienic conditions that discourage pest infestations.</p>
+                </div>
+                <!-- Service 12 -->
+                <div class="glass-card rounded-2xl p-8 group reveal">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-2xl font-semibold text-blue-600 font-mono">10</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-400 group-hover:text-blue-600 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Inspection & Monitoring</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Regular inspections and monitoring with detailed documentation, audit reports, and log file maintenance.</p>
+                </div>
+                <!-- Service 12 -->
+                <div class="glass-card rounded-2xl p-8 group reveal">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-2xl font-semibold text-blue-600 font-mono">11</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-400 group-hover:text-blue-600 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">Pest Awareness Training</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Educational programmes to help your staff understand pest prevention and maintain pest-free environments.</p>
+                </div>
+                <!-- Service 13 -->
+                <div class="glass-card rounded-2xl p-8 group reveal">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-2xl font-semibold text-blue-600 font-mono">12</span>
+                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-zinc-400 group-hover:text-blue-600 transition-colors"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-900 mb-3">General Pest Management</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Preventive treatment targeting crawling insects like spiders, silverfish, lizards, and crickets to keep your spaces safe and pest-free.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24"><div class="line-glow"></div></div>
+ 
+    <!-- Process Section -->
+    <section id="process" class="py-12 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16">
+            <div class="reveal">
+                <span class="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-4 block">How We Work</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight mb-6">
+                    <span class="text-gradient">Systematic Pest</span><br>
+                    <span class="text-zinc-900">Management Process</span>
+                </h2>
+                <p class="text-zinc-600 font-light leading-relaxed mb-8">
+                    Our structured 9-step approach ensures thorough identification, treatment, and long-term prevention of pest issues at your property.
+                </p>
+                <div class="space-y-6 mt-6">
+                    <!-- SOPs Card -->
+                    <div class="glass-card rounded-2xl p-8 border border-blue-400/20 bg-gradient-to-br from-blue-50/50 to-white relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-400/5 rounded-full blur-2xl -mr-10 -mt-10"></div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center">
+                                <i data-lucide="shield-check" class="w-6 h-6 text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-zinc-900">Standardized SOPs</h4>
+                                <p class="text-xs text-zinc-500">Structured Quality Management</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-zinc-600 font-light leading-relaxed">
+                            We strictly adhere to our 9-step process, combining scientific planning with advanced application methods to guarantee thorough eradication and safety.
+                        </p>
+                    </div>
+
+                    <!-- Safety Card -->
+                    <div class="glass-card rounded-2xl p-8 border border-zinc-200/50 bg-white relative overflow-hidden">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-600/10 flex items-center justify-center">
+                                <i data-lucide="leaf" class="w-6 h-6 text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-zinc-900">Health & Safety First</h4>
+                                <p class="text-xs text-zinc-500">Kids, Pets & Environment Safe</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-zinc-600 font-light leading-relaxed">
+                            All treatments utilize WHO-recommended, CIB-certified, low-toxicity chemicals. Odourless gel applications are safe for children and domestic pets without vacating.
+                        </p>
+                    </div>
+
+                    <!-- Support Card -->
+                    <div class="glass-card rounded-2xl p-8 border border-zinc-200/50 bg-white relative overflow-hidden">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-400/10 flex items-center justify-center">
+                                <i data-lucide="award" class="w-6 h-6 text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-zinc-900">Service Guarantee</h4>
+                                <p class="text-xs text-zinc-500">Post-Treatment Protection</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-zinc-600 font-light leading-relaxed">
+                            We stand behind our services with a dedicated warranty. If pests reappear within the warranty period, our technicians will re-inspect and re-treat the area free of cost.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="process-line space-y-6 reveal">
+                <div class="flex gap-5">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-400/10 border border-blue-400/40 flex items-center justify-center text-blue-600 font-semibold text-sm">01</div>
+                    <div class="pt-1.5">
+                        <h4 class="font-semibold text-zinc-900 mb-1">Inspection & Assessment</h4>
+                        <p class="text-sm text-zinc-600 font-light">Thorough inspection, pest identification and severity assessment of the infestation.</p>
+                    </div>
+                </div>
+                <div class="flex gap-5">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-400/10 border border-blue-400/40 flex items-center justify-center text-blue-600 font-semibold text-sm">02</div>
+                    <div class="pt-1.5">
+                        <h4 class="font-semibold text-zinc-900 mb-1">Strategy Development</h4>
+                        <p class="text-sm text-zinc-600 font-light">Working out customized pest management strategies based on findings.</p>
+                    </div>
+                </div>
+                <div class="flex gap-5">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-400/10 border border-blue-400/40 flex items-center justify-center text-blue-600 font-semibold text-sm">03</div>
+                    <div class="pt-1.5">
+                        <h4 class="font-semibold text-zinc-900 mb-1">4D Principle Planning</h4>
+                        <p class="text-sm text-zinc-600 font-light">Planning based on Deny Entry, Deny Food, Deny Shelter, Destroy methodology.</p>
+                    </div>
+                </div>
+                <div class="flex gap-5">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-400/10 border border-blue-400/40 flex items-center justify-center text-blue-600 font-semibold text-sm">04</div>
+                    <div class="pt-1.5">
+                        <h4 class="font-semibold text-zinc-900 mb-1">Client Consultation</h4>
+                        <p class="text-sm text-zinc-600 font-light">Discussion of management options, timelines, and expectations with the client.</p>
+                    </div>
+                </div>
+                <div class="flex gap-5">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-400/10 border border-blue-400/40 flex items-center justify-center text-blue-600 font-semibold text-sm">05</div>
+                    <div class="pt-1.5">
+                        <h4 class="font-semibold text-zinc-900 mb-1">Implementation</h4>
+                        <p class="text-sm text-zinc-600 font-light">Executing the planned management measures with precision and care.</p>
+                    </div>
+                </div>
+                <div class="flex gap-5">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-400/10 border border-blue-400/40 flex items-center justify-center text-blue-600 font-semibold text-sm">06</div>
+                    <div class="pt-1.5">
+                        <h4 class="font-semibold text-zinc-900 mb-1">Clean Out Programme</h4>
+                        <p class="text-sm text-zinc-600 font-light">Complete clean-out to remove dead pests and residual traces from the premises.</p>
+                    </div>
+                </div>
+                <div class="flex gap-5">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-400/10 border border-blue-400/40 flex items-center justify-center text-blue-600 font-semibold text-sm">07</div>
+                    <div class="pt-1.5">
+                        <h4 class="font-semibold text-zinc-900 mb-1">Ongoing Monitoring</h4>
+                        <p class="text-sm text-zinc-600 font-light">Continuous maintenance and monitoring to prevent re-infestation.</p>
+                    </div>
+                </div>
+                <div class="flex gap-5">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-400/10 border border-blue-400/40 flex items-center justify-center text-blue-600 font-semibold text-sm">08</div>
+                    <div class="pt-1.5">
+                        <h4 class="font-semibold text-zinc-900 mb-1">Documentation</h4>
+                        <p class="text-sm text-zinc-600 font-light">Maintaining proper records, audit reports, and log files for compliance.</p>
+                    </div>
+                </div>
+                <div class="flex gap-5">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-400/10 border border-blue-400/40 flex items-center justify-center text-blue-600 font-semibold text-sm">09</div>
+                    <div class="pt-1.5">
+                        <h4 class="font-semibold text-zinc-900 mb-1">Review Meetings</h4>
+                        <p class="text-sm text-zinc-600 font-light">Regular review meetings with the client to assess effectiveness and adjust plans.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24"><div class="line-glow"></div></div>
+ 
+    <!-- Pest Details Section (Tabbed) -->
+    <section id="pests" class="py-12 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12 reveal">
+                <span class="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-4 block">In-Depth Knowledge</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight">
+                    <span class="text-gradient">Pest Information &</span>
+                    <span class="text-zinc-900"> Treatment Details</span>
+                </h2>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
+                <button class="tab-btn active px-5 py-2.5 rounded-full border border-zinc-200 text-sm font-medium text-zinc-600 transition-all hover:text-zinc-900" data-tab="rodent">Rodents</button>
+                <button class="tab-btn px-5 py-2.5 rounded-full border border-zinc-200 text-sm font-medium text-zinc-600 transition-all hover:text-zinc-900" data-tab="termite">Termites</button>
+                <button class="tab-btn px-5 py-2.5 rounded-full border border-zinc-200 text-sm font-medium text-zinc-600 transition-all hover:text-zinc-900" data-tab="bedbug">Bed Bugs</button>
+                <button class="tab-btn px-5 py-2.5 rounded-full border border-zinc-200 text-sm font-medium text-zinc-600 transition-all hover:text-zinc-900" data-tab="cockroach">Cockroaches</button>
+                <button class="tab-btn px-5 py-2.5 rounded-full border border-zinc-200 text-sm font-medium text-zinc-600 transition-all hover:text-zinc-900" data-tab="mosquito">Mosquitoes</button>
+            </div>
+
+            <!-- Rodent Tab -->
+            <div class="tab-content active" id="tab-rodent">
+                <div class="grid lg:grid-cols-2 gap-10 items-center">
+                    <div class="rounded-2xl overflow-hidden border border-zinc-200/50 bg-white p-4">
+                        <img src="assets/images/img (8).png" alt="Rodent" class="w-full h-64 sm:h-80 object-contain">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-zinc-900 mb-4">Rodent Management</h3>
+                        <p class="text-zinc-600 font-light leading-relaxed mb-4">Rodents (rats, mice, and bandicoots) are destructive urban pests that contaminate food, spread diseases, and cause severe structural damage. Their constant gnawing on wires and cables is a leading cause of electrical short circuits, fires, and communication network collapses.</p>
+                        <p class="text-zinc-600 font-light leading-relaxed mb-6">Our service provides total and effective rodent management using a new-age combination of strategic baiting, trapping, and proofing methods.</p>
+                        
+                        <h4 class="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-3">Features & Benefits</h4>
+                        <div class="grid grid-cols-1 gap-2 mb-6">
+                            <div class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0 mt-1"></i>
+                                <span class="text-sm text-zinc-600">Baits are placed in strategic locations where rodents frequently visit.</span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0 mt-1"></i>
+                                <span class="text-sm text-zinc-600">Use of glue boards/traps is integrated into operations and carried out wherever needed.</span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0 mt-1"></i>
+                                <span class="text-sm text-zinc-600">Uses registered products targeted at total management.</span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0 mt-1"></i>
+                                <span class="text-sm text-zinc-600">Our experts suggest sanitation and proofing measures from time to time to prevent rodent entry.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Divider line -->
+                <div class="border-t border-zinc-200/50 my-10"></div>
+
+                <!-- Sub-section for Species -->
+                <div>
+                    <h4 class="text-lg font-semibold text-zinc-900 mb-6 text-center lg:text-left flex items-center gap-2 justify-center lg:justify-start">
+                        <i data-lucide="shield-alert" class="w-5 h-5 text-blue-600"></i>
+                        Common Target Rodent Species
+                    </h4>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Species 1 -->
+                        <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row gap-6 items-center">
+                            <div class="w-32 h-32 md:w-1/3 md:h-auto rounded-xl overflow-hidden border border-zinc-200/50 flex-shrink-0 aspect-square bg-white p-3">
+                                <img src="assets/images/img (8).png" alt="House Mouse" class="w-full h-full object-contain transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h5 class="font-semibold text-zinc-900">House Mouse</h5>
+                                </div>
+                                <p class="text-[11px] text-zinc-400 font-serif italic mb-2">Mus musculus</p>
+                                <p class="text-xs text-zinc-600 font-light leading-relaxed">A small species, dusty grey-brown with a lighter belly. Extremely active, nest indoors in walls and cabinets, and feed on diverse foods.</p>
+                            </div>
+                        </div>
+                        <!-- Species 2 -->
+                        <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row gap-6 items-center">
+                            <div class="w-32 h-32 md:w-1/3 md:h-auto rounded-xl overflow-hidden border border-zinc-200/50 flex-shrink-0 aspect-square bg-white p-3">
+                                <img src="assets/images/img (9).png" alt="House Rat" class="w-full h-full object-contain transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h5 class="font-semibold text-zinc-900">House Rat (Roof Rat)</h5>
+                                </div>
+                                <p class="text-[11px] text-zinc-400 font-serif italic mb-2">Rattus rattus</p>
+                                <p class="text-xs text-zinc-600 font-light leading-relaxed">A large species, sleek, dark brown/black with a tail longer than its head and body. Excellent climbers nesting in roofs, attics, and tall structures.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Divider line -->
+                <div class="border-t border-zinc-200/50 my-10"></div>
+                
+                <!-- Sub-section for Equipment -->
+                <div>
+                    <h4 class="text-lg font-semibold text-zinc-900 mb-6 text-center lg:text-left flex items-center gap-2 justify-center lg:justify-start">
+                        <i data-lucide="shield-alert" class="w-5 h-5 text-blue-600"></i>
+                        Professional Grade Management Equipment
+                    </h4>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row gap-6 items-center">
+                            <div class="w-32 h-32 md:w-1/3 md:h-auto rounded-xl overflow-hidden border border-zinc-200/50 flex-shrink-0 aspect-square bg-white p-3">
+                                <img src="assets/images/img (6).png" alt="Rodent Bait Station" class="w-full h-full object-contain transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="flex-grow">
+                                <h5 class="font-semibold text-zinc-900 mb-2">Tamper-Resistant Bait Stations</h5>
+                                <p class="text-xs text-zinc-600 font-light leading-relaxed">Secure, lockable stations designed to safely house rodent bait, keeping it protected from children, pets, and non-target animals.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row gap-6 items-center">
+                            <div class="w-32 h-32 md:w-1/3 md:h-auto rounded-xl overflow-hidden border border-zinc-200/50 flex-shrink-0 aspect-square bg-white p-3">
+                                <img src="assets/images/img (7).png" alt="Rodent Glue Trap" class="w-full h-full object-contain transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="flex-grow">
+                                <h5 class="font-semibold text-zinc-900 mb-2">Industrial Strength Glue Traps</h5>
+                                <p class="text-xs text-zinc-600 font-light leading-relaxed">Non-toxic, flat-folding adhesive boards placed along walls and active runways for immediate, pesticide-free capturing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Termite Tab -->
+            <div class="tab-content" id="tab-termite">
+                <div class="grid lg:grid-cols-2 gap-10 items-center">
+                    <div class="rounded-2xl overflow-hidden border border-zinc-200/50 bg-white p-4">
+                        <img src="assets/images/img (3).png" alt="Termite" class="w-full h-64 sm:h-80 object-contain">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-zinc-900 mb-4">Termite Management</h3>
+                        <p class="text-zinc-600 font-light leading-relaxed mb-4">Termites (often called white ants) are silent destroyers organized in massive subterranean colonies of millions. A single mature queen can produce up to 10,000 eggs per week (30 to 60 million eggs in her lifetime), making them a rapid and relentless threat.</p>
+                        <p class="text-zinc-600 font-light leading-relaxed mb-6">They feed on cellulose materials (doors, furniture, documents, clothes, currency notes) and also damage non-cellulose items like wire coatings, rubber, and thermocol. As hidden invaders, they often cause heavy structural damage before they are discovered.</p>
+                        
+                        <h4 class="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-3">Post-Construction Treatment Method</h4>
+                        <p class="text-sm text-zinc-600 font-light leading-relaxed mb-4">
+                            We carry out treatment in the junction of floor & wall by drilling holes, injecting insecticide to soak the area, and sealing them. This creates a completely undetectable chemical barrier around your property.
+                        </p>
+                        
+                        <h4 class="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-3">Benefits of Termite Treatment</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Kills termites (doesn't just repel them)</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Next-generation chemicals used worldwide</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Safe for your family's health</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Zero inconvenience during service</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bed Bug Tab -->
+            <div class="tab-content" id="tab-bedbug">
+                <div class="grid lg:grid-cols-2 gap-10 items-center">
+                    <div class="rounded-2xl overflow-hidden border border-zinc-200/50 bg-white p-4">
+                        <img src="assets/images/img (4).png" alt="Bed Bug" class="w-full h-64 sm:h-80 object-contain">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-zinc-900 mb-4">Bed Bug Management</h3>
+                        <p class="text-zinc-600 font-light leading-relaxed mb-6">Bed bugs hide in corners and clothes. They multiply fast, feed on blood at night, and cause severe discomfort and sleepless nights. Early treatment is essential to prevent widespread infestation.</p>
+                        <h4 class="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-3">Service Details</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Thorough inspection of all hiding spots</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Targeted chemical spray treatment</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">45-day validity with 2 services</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Safe, eco-friendly chemical products</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Cockroach Tab -->
+            <div class="tab-content" id="tab-cockroach">
+                <div class="grid lg:grid-cols-2 gap-10 items-center">
+                    <div class="rounded-2xl overflow-hidden border border-zinc-200/50 bg-white p-4">
+                        <img src="assets/images/img (1).png" alt="Cockroach" class="w-full h-64 sm:h-80 object-contain">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-zinc-900 mb-4">Cockroach Management</h3>
+                        <p class="text-zinc-600 font-light leading-relaxed mb-4">Cockroaches are highly resilient, adaptable pests found globally in homes, offices, hotels, and restaurants. Capable of surviving extreme conditions, they are key vectors that contaminate food, spread diseases, and trigger allergies in humans.</p>
+                        <p class="text-zinc-600 font-light leading-relaxed mb-6">They chew on fabric, bookbindings, and papers, causing property damage. Our clean gel treatment targets their hideouts directly, providing total management of cockroaches and other crawling pests like ants, silverfish, and spiders without any disruption.</p>
+                        
+                        <h4 class="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-3">Benefits of Gel Treatment</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Safer for health, property & environment</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Eco-friendly & non-polluting</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Odourless & non-messy (no smell)</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">No need to vacate during/after treatment</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Next-generation global treatments</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Highly effective & long-lasting</span></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Divider line -->
+                <div class="border-t border-zinc-200/50 my-10"></div>
+                
+                <!-- Sub-section for Species -->
+                <div>
+                    <h4 class="text-lg font-semibold text-zinc-900 mb-6 text-center lg:text-left flex items-center gap-2 justify-center lg:justify-start">
+                        <i data-lucide="bug" class="w-5 h-5 text-blue-600"></i>
+                        Common Target Cockroach Species
+                    </h4>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row gap-6 items-center">
+                            <div class="w-32 h-32 md:w-1/3 md:h-auto rounded-xl overflow-hidden border border-zinc-200/50 flex-shrink-0 aspect-square bg-white p-3">
+                                <img src="assets/images/img (1).png" alt="American Cockroach" class="w-full h-full object-contain transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h5 class="font-semibold text-zinc-900">American Cockroach</h5>
+                                </div>
+                                <p class="text-[11px] text-zinc-400 font-serif italic mb-2">Periplaneta americana</p>
+                                <p class="text-xs text-zinc-600 font-light leading-relaxed">A large species, typically reddish-brown and found in warm, damp environments such as sewers, basements, and drains. Highly active flyers.</p>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 flex flex-col md:flex-row gap-6 items-center">
+                            <div class="w-32 h-32 md:w-1/3 md:h-auto rounded-xl overflow-hidden border border-zinc-200/50 flex-shrink-0 aspect-square bg-white p-3">
+                                <img src="assets/images/img (2).png" alt="German Cockroach" class="w-full h-full object-contain transition-transform duration-500 hover:scale-110">
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex items-center justify-between mb-1">
+                                    <h5 class="font-semibold text-zinc-900">German Cockroach</h5>
+                                </div>
+                                <p class="text-[11px] text-zinc-400 font-serif italic mb-2">Blattella germanica</p>
+                                <p class="text-xs text-zinc-600 font-light leading-relaxed">A rapid breeding small, light brown species with two dark stripes on the back. Infests indoor kitchens, pantries, and food-prep areas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mosquito Tab -->
+            <div class="tab-content" id="tab-mosquito">
+                <div class="grid lg:grid-cols-2 gap-10 items-center">
+                    <div class="rounded-2xl overflow-hidden border border-zinc-200/50 bg-white p-4">
+                        <img src="assets/images/img (5).png" alt="Mosquito Management" class="w-full h-64 sm:h-80 object-contain">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-semibold text-zinc-900 mb-4">Mosquito Management</h3>
+                        <p class="text-zinc-600 font-light leading-relaxed mb-6">Mosquitoes are vectors that carry dangerous diseases like Dengue, Malaria, Chikungunya, and Zika. Breeding rapidly in standing water, they pose severe public health risks to homes and workplaces.</p>
+                        <h4 class="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-3">Vector Risks</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                            <div class="flex items-center gap-2"><i data-lucide="x-circle" class="w-4 h-4 text-red-500 flex-shrink-0"></i><span class="text-sm text-zinc-600">Spread Dengue & Malaria</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="x-circle" class="w-4 h-4 text-red-500 flex-shrink-0"></i><span class="text-sm text-zinc-600">Painful, itchy bites</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="x-circle" class="w-4 h-4 text-red-500 flex-shrink-0"></i><span class="text-sm text-zinc-600">Allergic skin reactions</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="x-circle" class="w-4 h-4 text-red-500 flex-shrink-0"></i><span class="text-sm text-zinc-600">Disrupt sleep and comfort</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="x-circle" class="w-4 h-4 text-red-500 flex-shrink-0"></i><span class="text-sm text-zinc-600">Breed in stagnant water</span></div>
+                        </div>
+                        <h4 class="text-sm font-semibold uppercase tracking-wider text-blue-600 mb-3">Eradication Methodology</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Larvicidal treatments</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Residual misting & spray</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Thermal fogging (outdoor)</span></div>
+                            <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500 flex-shrink-0"></i><span class="text-sm text-zinc-700">Source reduction guidance</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24"><div class="line-glow"></div></div>
+ 
+    <!-- Service Areas - Scrolling -->
+    <section id="areas" class="py-12 sm:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24 mb-12 reveal">
+            <div class="text-center">
+                <span class="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-4 block">Coverage</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight">
+                    <span class="text-gradient">Service Areas &</span>
+                    <span class="text-zinc-900"> Property Types</span>
+                </h2>
+            </div>
+        </div>
+        <!-- Scrolling Row 1 -->
+        <div class="mask-fade overflow-hidden mb-4">
+            <div class="flex gap-4 animate-scroll-infinite" style="width: max-content;">
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="home" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Homes</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="building-2" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Offices</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="hotel" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Hotels</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="utensils" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Restaurants</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="factory" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Factories</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="layout-grid" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Housing Complexes</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="landmark" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Commercial Properties</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="warehouse" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Food Storage Areas</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="chef-hat" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Kitchens</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="waves" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Drain Areas</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="arrow-down-up" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Shafts</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="hard-hat" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Construction Sites</span></div>
+                <!-- Duplicate for seamless scroll -->
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="home" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Homes</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="building-2" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Offices</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="hotel" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Hotels</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="utensils" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Restaurants</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="factory" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Factories</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="layout-grid" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Housing Complexes</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="landmark" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Commercial Properties</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="warehouse" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Food Storage Areas</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="chef-hat" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Kitchens</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="waves" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Drain Areas</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="arrow-down-up" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Shafts</span></div>
+                <div class="glass-card rounded-xl px-8 py-5 flex items-center gap-3 flex-shrink-0"><i data-lucide="hard-hat" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-medium text-zinc-800 whitespace-nowrap">Construction Sites</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us / Benefits -->
+    <section class="py-12 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24 relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-zinc-50 via-white to-zinc-50"></div>
+        <div class="relative z-10 max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-4 block">Why PPS</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight">
+                    <span class="blue-text">The PPS Advantage</span>
+                </h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-green-400/10 flex items-center justify-center mb-5">
+                        <i data-lucide="leaf" class="w-6 h-6 text-green-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-zinc-900 mb-2">Eco-Friendly & Non-Polluting</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Methods that are safe for the environment, using chemicals that don't harm ecosystems.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-blue-400/10 flex items-center justify-center mb-5">
+                        <i data-lucide="wind" class="w-6 h-6 text-blue-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-zinc-900 mb-2">Odourless & Non-Messy</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Clean treatments with no lingering smells or messy residue left behind.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-purple-400/10 flex items-center justify-center mb-5">
+                        <i data-lucide="clock" class="w-6 h-6 text-purple-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-zinc-900 mb-2">Effective & Long-Lasting</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Solutions that provide sustained protection, reducing the need for frequent retreatment.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-yellow-400/10 flex items-center justify-center mb-5">
+                        <i data-lucide="door-open" class="w-6 h-6 text-yellow-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-zinc-900 mb-2">No Vacate Needed</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Stay in your premises during and after treatment with zero disruption to your daily life.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-red-400/10 flex items-center justify-center mb-5">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-red-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-zinc-900 mb-2">Health, Property & Environment Safe</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Triple safety assurance to protect what matters most to you on all fronts.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-blue-400/10 flex items-center justify-center mb-5">
+                        <i data-lucide="globe" class="w-6 h-6 text-blue-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-zinc-900 mb-2">Internationally Proven Methods</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Techniques widely used in developed countries, bringing global standards to your doorstep.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-400/10 flex items-center justify-center mb-5">
+                        <i data-lucide="file-text" class="w-6 h-6 text-cyan-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-zinc-900 mb-2">Records & Documentation</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Complete documentation including audit reports and log file maintenance for compliance.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-orange-400/10 flex items-center justify-center mb-5">
+                        <i data-lucide="bar-chart-3" class="w-6 h-6 text-orange-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-zinc-900 mb-2">Audit Reports</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Detailed audit reports that help you track pest management progress and compliance status.</p>
+                </div>
+                <div class="glass-card rounded-2xl p-8 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-pink-400/10 flex items-center justify-center mb-5">
+                        <i data-lucide="book-open" class="w-6 h-6 text-pink-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg text-zinc-900 mb-2">Pest Awareness Training</h3>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed">Educational programmes for your staff to understand and prevent pest issues proactively.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24"><div class="line-glow"></div></div>
+ 
+    <!-- Contact Section -->
+    <section id="contact" class="py-12 sm:py-24 px-4 sm:px-8 md:px-16 lg:px-24">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="text-xs font-semibold uppercase tracking-wider text-blue-600 mb-4 block">Get In Touch</span>
+                <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight">
+                    <span class="text-gradient">Get In Touch With Us</span>
+                    <span class="text-zinc-900"> Today</span>
+                </h2>
+                <p class="text-zinc-600 font-light mt-4 max-w-xl mx-auto">We are here to help you. Reach out to Noida & Delhi NCR's trusted pest management experts for any inquiries or support.</p>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                <!-- Call Us Card -->
+                <div class="glass-card rounded-2xl p-6 blue-border reveal">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-400/10 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="phone" class="w-5 h-5 text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-zinc-900 mb-1">Call Us</p>
+                            <a href="tel:+919350649859" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors block">+91 9350649859</a>
+                            <a href="tel:+919650312947" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors block">+91 9650312947</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Email Us Card -->
+                <div class="glass-card rounded-2xl p-6 blue-border reveal">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-400/10 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="mail" class="w-5 h-5 text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-zinc-900 mb-1">Email Us</p>
+                            <a href="mailto:solutionsperfectpest@gmail.com" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors break-all">solutionsperfectpest@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Visit Us Card -->
+                <div class="glass-card rounded-2xl p-6 blue-border reveal">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-400/10 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-zinc-900 mb-1">Visit Us</p>
+                            <p class="text-sm text-zinc-600">Sector-10, Noida, (U.P.) - 201301</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Working Hours Card -->
+                <div class="glass-card rounded-2xl p-6 blue-border reveal">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-400/10 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="clock" class="w-5 h-5 text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-zinc-900 mb-1">Working Hours</p>
+                            <p class="text-sm text-zinc-600">Mon – Sun: 8:00 AM – 10:00 PM<br>Available All 7 Days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="py-12 sm:py-20 px-4 sm:px-8 md:px-16 lg:px-24 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="assets/images/cta_bg.png" alt="CTA" class="w-full h-full object-cover opacity-15">
+            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-zinc-50/80"></div>
+        </div>
+        <div class="relative z-10 max-w-4xl mx-auto text-center reveal">
+            <h2 class="text-2xl sm:text-3xl lg:text-5xl font-semibold tracking-tight mb-6">
+                <span class="text-zinc-900">Don't Let Pests Take Over.</span><br>
+                <span class="blue-text">Act Now.</span>
+            </h2>
+            <p class="text-zinc-600 font-light text-lg mb-10 max-w-2xl mx-auto">Every day you wait, infestations grow. Get a free inspection from our certified experts and protect your property today.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="tel:+919350649859" class="px-8 py-4 bg-blue-400 text-dark-950 font-semibold rounded-xl hover:bg-blue-500 transition-all hover:-translate-y-1 blue-glow flex items-center gap-2">
+                    <i data-lucide="phone" class="w-4 h-4"></i>
+                    Call: +91 9350649859
+                </a>
+                <a href="tel:+919650312947" class="px-8 py-4 border border-zinc-200 text-zinc-800 font-semibold rounded-xl hover:bg-zinc-100/50 transition-all hover:-translate-y-1 flex items-center gap-2">
+                    <i data-lucide="phone" class="w-4 h-4 text-blue-600"></i>
+                    Call: +91 9650312947
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-200 bg-zinc-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24 py-12 sm:py-16">
+            <div class="grid md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_1.2fr] gap-12">
+                <div>
+                    <div class="flex items-center gap-3 mb-5">
+                        <img src="assets/images/img (10).png" alt="PPS Logo" class="w-10 h-10 object-contain rounded-lg">
+                        <div>
+                            <span class="font-logo text-sm text-blue-600">PPS</span>
+                            <p class="text-[10px] text-zinc-500 -mt-0.5 tracking-widest uppercase">Perfect Pest Solutions</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-zinc-600 font-light leading-relaxed mb-5">Cost-effective, eco-friendly pest management by technically qualified professionals for homes and businesses.</p>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span class="text-xs text-zinc-500">Available for Service</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider text-zinc-800 mb-5">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#services" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors">Cockroach Management</a></li>
+                        <li><a href="#services" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors">Rodent Management</a></li>
+                        <li><a href="#services" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors">Termite Management</a></li>
+                        <li><a href="#services" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors">Bed Bug Management</a></li>
+                        <li><a href="#services" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors">Mosquito Management</a></li>
+                        <li><a href="#services" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors">General Pest Management</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider text-zinc-800 mb-5">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors">About Us</a></li>
+                        <li><a href="#process" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors">Our Process</a></li>
+                        <li><a href="#pests" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors">Pest Information</a></li>
+                        <li><a href="#areas" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors">Service Areas</a></li>
+                        <li><a href="#contact" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold uppercase tracking-wider text-zinc-800 mb-5">Contact</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="phone" class="w-4 h-4 text-blue-600 flex-shrink-0"></i>
+                            <div>
+                                <a href="tel:+919350649859" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors block">+91 9350649859</a>
+                                <a href="tel:+919650312947" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors block">+91 9650312947</a>
+                            </div>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="mail" class="w-4 h-4 text-blue-600 flex-shrink-0"></i>
+                            <a href="mailto:solutionsperfectpest@gmail.com" class="text-sm text-zinc-600 hover:text-blue-600 transition-colors break-all">solutionsperfectpest@gmail.com</a>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5"></i>
+                            <span class="text-sm text-zinc-600">Sector-10, Noida, (U.P.) - 201301</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-zinc-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-zinc-500">© 2025 Perfect Pest Solutions. All rights reserved.</p>
+                <p class="text-xs text-zinc-500">Professionally managed pest management services in Noida & Delhi NCR.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Call Button -->
+    <a href="tel:+919350649859" class="floating-btn w-14 h-14 rounded-full bg-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/30 hover:bg-blue-600 transition-all hover:scale-110">
+        <i data-lucide="phone" class="w-6 h-6 text-white"></i>
+    </a>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let menuOpen = false;
+        menuBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('hidden');
+            menuBtn.innerHTML = menuOpen 
+                ? '<i data-lucide="x" class="w-6 h-6"></i>' 
+                : '<i data-lucide="menu" class="w-6 h-6"></i>';
+            lucide.createIcons();
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuOpen = false;
+                menuBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+                lucide.createIcons();
+            });
+        });
+
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, index * 80);
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Tab System
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Navbar background on scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.style.borderBottomColor = 'rgba(9,9,11,0.08)';
+            } else {
+                nav.style.borderBottomColor = 'rgba(9,9,11,0.04)';
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
